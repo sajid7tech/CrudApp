@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="card p-5 mt-5">
+    <form>
+      <mat-form-field appearance="fill">
+        <mat-label>EmployeeID</mat-label>
+        <input matInput   name="employeeID" [(ngModel)]="employee.employeeId" disabled=""/>
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Your Name</mat-label>
+        <input matInput  name="employeeName" [(ngModel)]="employee.employeeName"/>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Contact details</mat-label>
+        <input matInput name="employeeContactNumber" [(ngModel)]="employee.employeeContactNumber" />
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enter Your Address</mat-label>
+        <input matInput name="employeeAddress" [(ngModel)]="employee.employeeAddress" />
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select Your Department</mat-label>
+        <mat-select name="employeeDepartment" [(ngModel)]="employee.employeeDepartment">
+          <mat-option value="Engineering">Engineering</mat-option>
+          <mat-option value="Finance">Finance</mat-option>
+          <mat-option value="Support">Support</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-radio-group aria-label="Gender">
+        <mat-label>Gender</mat-label>
+        <mat-radio-button value="M" (click)="selectGender('M')">Male</mat-radio-button>
+        <mat-radio-button value="F" (click)="selectGender('F')">Female</mat-radio-button>
+      </mat-radio-group>
+
+      <mat-form-field appearance="fill" class="mt-2">
+        <mat-label>Employee Skills is mentioned here</mat-label>
+        <input matInput name="employeeSkills" [(ngModel)]="employee.employeeSkills" disabled="" />
+      </mat-form-field>
+
+      <div>
+        <Label>Skills</Label>
+        <section class="example-section">
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="Angular">Angular</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="Java">Java</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="AWS">AWS</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="JavaScript">JavaScript</mat-checkbox>
+        </section>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="button-design">
+        <div class="example-button-row">
+          <div class="example-flex-container">
+            <div class="example-button-container">
+              <button mat-fab extended (click)="print()">
+                <mat-icon>favorite</mat-icon>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="example-button-row">
+          <div class="example-flex-container">
+            <div class="example-button-container">
+              <button mat-fab extended>
+                <mat-icon>delete</mat-icon>
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
