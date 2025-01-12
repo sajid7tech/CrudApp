@@ -1,6 +1,11 @@
 <div class="container">
-  <div class="card p-5 mt-5">
-    <form>
+
+  <div class="mt-2">
+    <button mat-raised-button routerLink="/employee-list">Go To Employee List Page</button>
+  </div>
+
+  <div class="card p-5 mt-2">
+    <form #employeeForm = "ngForm" (ngSubmit)="saveEmployee(employeeForm)">
       <mat-form-field appearance="fill">
         <mat-label>EmployeeID</mat-label>
         <input matInput   name="employeeID" [(ngModel)]="employee.employeeId" disabled=""/>
@@ -36,8 +41,8 @@
 
       <mat-radio-group aria-label="Gender">
         <mat-label>Gender</mat-label>
-        <mat-radio-button value="M" (click)="selectGender('M')">Male</mat-radio-button>
-        <mat-radio-button value="F" (click)="selectGender('F')">Female</mat-radio-button>
+        <mat-radio-button [checked]="employee.employeeGender == 'M' " value="M" (click)="selectGender('M')">Male</mat-radio-button>
+        <mat-radio-button [checked]="employee.employeeGender == 'F' " value="F" (click)="selectGender('F')">Female</mat-radio-button>
       </mat-radio-group>
 
       <mat-form-field appearance="fill" class="mt-2">
@@ -48,10 +53,12 @@
       <div>
         <Label>Skills</Label>
         <section class="example-section">
-          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="Angular">Angular</mat-checkbox>
-          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="Java">Java</mat-checkbox>
-          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="AWS">AWS</mat-checkbox>
-          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="JavaScript">JavaScript</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="Angular" [checked]="checkSkills('Angular')"> Angular</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="Java" [checked]="checkSkills('Java')"> Java </mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="AWS" [checked]="checkSkills('AWS')"> AWS</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="JavaScript" [checked]="checkSkills('JavaScript')">JavaScript</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="DigitalMarketing" [checked]="checkSkills('DigitalMarketing')">Digital Marketing</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="onSkillSelect($event)" value="VideoEditing" [checked]="checkSkills('VideoEditing')">Video Editing</mat-checkbox>
         </section>
       </div>
       <mat-divider></mat-divider>

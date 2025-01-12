@@ -8,7 +8,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { Employee } from '../employee.model';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
+import { EmployeeService } from '../employee.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -22,6 +25,7 @@ import { FormsModule } from '@angular/forms';
     MatDividerModule,
     MatButtonModule,
     FormsModule,
+    RouterLink
   ],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css',
@@ -37,7 +41,9 @@ export class EmployeeComponent implements OnInit {
     employeeSkills: '',
   };
 
-  constructor() {}
+  constructor(private employeeServive : EmployeeService) {
+
+  }
 
   skills: any = [];
 
@@ -67,4 +73,26 @@ export class EmployeeComponent implements OnInit {
   print() : void {
     console.log(this.employee);
   }
+
+  checkSkills(skill:string){
+    return this.employee.employeeSkills != null && this.employee.employeeSkills.includes(skill);
+  }
+
+  saveEmployee(employeeForm:NgForm): void{
+    this.employeeServive.saveEmployee(this.employee).subscribe(
+      {
+        next : (res:Employee) =>{
+          console.log(res);
+          employeeForm.reset();
+          this.employee.employeeGender='';
+          this.skills= [];
+          this.employee.employeeSkills='';
+        },
+        error:(err:HttpErrorResponse) => {
+          console.log(err);
+        }
+      }
+    );
+  }
+
 }
