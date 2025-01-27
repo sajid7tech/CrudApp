@@ -11,7 +11,8 @@ import { Employee } from '../employee.model';
 import { FormsModule, NgForm } from '@angular/forms';
 import { EmployeeService } from '../employee.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
@@ -31,24 +32,38 @@ import { RouterLink } from '@angular/router';
   styleUrl: './employee.component.css',
 })
 export class EmployeeComponent implements OnInit {
-  employee: Employee = {
-    employeeId: 0,
-    employeeName: '',
-    employeeContactNumber: '',
-    employeeAddress: '',
-    employeeGender: '',
-    employeeDepartment: '',
-    employeeSkills: '',
-  };
+  // employee: Employee = {
+  //   employeeId: 0,
+  //   employeeName: '',
+  //   employeeContactNumber: '',
+  //   employeeAddress: '',
+  //   employeeGender: '',
+  //   employeeDepartment: '',
+  //   employeeSkills: '',
+  // };
 
-  constructor(private employeeServive : EmployeeService) {
+  isCreatedEmployee : boolean = true;
+
+  employee : any;
+
+  constructor(private employeeServive : EmployeeService, private router:Router , private activeRoute : ActivatedRoute) {
 
   }
 
   skills: any = [];
 
   ngOnInit(): void {
-    console.log(this.employee)
+    this.employee = this.activeRoute.snapshot.data['employee'];
+    console.log(this.employee);
+    if(this.employee && this.employee.employeeId>0){
+      this.isCreatedEmployee = false;
+      if(this.employee.employeeSkills != ''){
+        this.skills = [];
+        this.skills = this.employee.employeeSkills.split(',');
+      }
+    }else{
+      this.isCreatedEmployee = true;
+    }
   }
 
   selectGender(gender: string): void {
@@ -79,20 +94,35 @@ export class EmployeeComponent implements OnInit {
   }
 
   saveEmployee(employeeForm:NgForm): void{
-    this.employeeServive.saveEmployee(this.employee).subscribe(
-      {
-        next : (res:Employee) =>{
-          console.log(res);
-          employeeForm.reset();
-          this.employee.employeeGender='';
-          this.skills= [];
-          this.employee.employeeSkills='';
-        },
-        error:(err:HttpErrorResponse) => {
-          console.log(err);
+    if(this.isCreatedEmployee){
+      this.employeeServive.saveEmployee(this.employee).subscribe(
+        {
+          next : (res:Employee) =>{
+            console.log(res);
+            employeeForm.reset();
+            this.employee.employeeGender='';
+            this.skills= [];
+            this.employee.employeeSkills='';
+            this.router.navigate(['/employee-list']);
+          },
+          error:(err:HttpErrorResponse) => {
+            console.log(err);
+          }
         }
-      }
-    );
+      );
+    }else{
+      this.employeeServive.updateEmployee(this.employee).subscribe(
+        {
+          next : (res : Employee) => {
+            this.router.navigate(['/employee-list']);
+          },
+          error : (err : HttpErrorResponse) => {
+            console.log(err);
+          }
+        }
+      )
+    }
+    
   }
 
 }

@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from "./header/header.component";
-import { HomeComponent } from "./home/home.component";
-import { EmployeeComponent } from './employee/employee.component';
-import { ComingSoonComponent } from './coming-soon/coming-soon.component';
-import { EmployeeListComponent } from './employee-list/employee-list.component';
 
 
 @Component({

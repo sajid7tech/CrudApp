@@ -22,4 +22,16 @@ export class EmployeeService {
     return this.httpClient.get<Employee[]>(`${this.url}/get/employees`)
   }
 
+  public deleteEmployee(employeeId:number) : Observable<Employee> {
+    return this.httpClient.delete<Employee>(`${this.url}/delete/employee/${employeeId}`);
+  } 
+
+  public getEmployeeByID(employeeId:number): Observable<Employee>{
+    return this.httpClient.get<Employee>(`${this.url}/get/employee/${employeeId}`);
+  }
+
+  public updateEmployee(employee : Employee) :Observable<Employee>{
+    return this.httpClient.put<Employee>(`${this.url}/update/employee`,employee);
+  }
+
 }
